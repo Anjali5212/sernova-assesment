@@ -3,11 +3,11 @@ package com.sernova.web;
 import com.sernova.domain.Address;
 import com.sernova.domain.Person;
 import com.sernova.domain.PersonRepository;
+import com.sernova.dto.PersonAddressDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +33,9 @@ public class ApiController {
     }
 
     @GetMapping("/persons-with-addresses")
-    public ResponseEntity<List<Person>> personsWithAddresses() {
-        return ResponseEntity.ok(personRepository.findAll());
+    public Page<PersonAddressDto> personsWithAddresses(@RequestParam(defaultValue = "0") int page,
+                                                       @RequestParam(defaultValue = "50") int size) {
+        return personRepository.findPersonsWithAddresses(PageRequest.of(page, size));
     }
 
     @PostMapping("/seed/people")
