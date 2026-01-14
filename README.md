@@ -7,14 +7,24 @@
 org.apache.maven.lifecycle.LifecycleExecutionException".
 
 **Root causes that I identified are:**
+
 i) The project included spring-boot-starter-data-jpa, which implicitly requires a valid database connection at application startup.
+
 ii) No database driver or configuration was provided.
+
 iii) JPA entity classes were missing mandatory identifiers.
+
 iv) Java and Maven were using different Java versions, leading to build/runtime inconsistencies.
+
+
 **Fixes I applied:**
+
 i) Added MYSQL dependency in pom.xml
+
 ii) Added MYSQL database configuration in application.properties file.
+
 iii) Added missing @Id annotation in entities inorder to make them valid entities.
+
 iv) Aligned maven version to 21 to match the Java version as maven uses JVM to compile and run the application. A mismatch between these version will cause build/run time issues.
 
 After these changes, the application built and started successfully.
