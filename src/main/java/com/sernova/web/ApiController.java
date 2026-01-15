@@ -33,9 +33,9 @@ public class ApiController {
     }
 
     @GetMapping("/persons-with-addresses")
-    public Page<PersonAddressDto> personsWithAddresses(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Page<PersonAddressDto>> personsWithAddresses(@RequestParam(defaultValue = "0") int page,
                                                        @RequestParam(defaultValue = "50") int size) {
-        return personRepository.findPersonsWithAddresses(PageRequest.of(page, size));
+        return ResponseEntity.ok(personRepository.findPersonsWithAddresses(PageRequest.of(page, size)));
     }
 
     @PostMapping("/seed/people")
